@@ -1,0 +1,3 @@
+0:00 - 0:33 delovanje custom_vzorec.s
+0:34 - 1:03 delovanje test_program_IO-v05.s
+1:04 - 2:01 delovanje novi_IO.s
