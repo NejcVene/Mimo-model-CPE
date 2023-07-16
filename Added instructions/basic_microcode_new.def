@@ -9,11 +9,11 @@ fetch:	addrsel=pc irload=1 			# Address=PC, Load IR register
 # sub Rd,Rs,Rt ; Rd <- Rs - Rt		PC <- PC + 1
 1: aluop=sub  op2sel=treg  dwrite=1  regsrc=aluout, goto fetch
 
-# addi Rd,Rs,immed  ; Rd <- Rs + immed	PC <- PC + 2 TO JE NA NOVO
+# addi Rd,Rs,immed  ; Rd <- Rs + immed	PC <- PC + 2
 16:	addrsel=pc imload=1
 	aluop=add  op2sel=immed dwrite=1  regsrc=aluout, goto pcincr
 
-# subi Rd,Rs,immed ; Rd <- Rs - immed	PC <- PC + 2  TO JE NA NOVO
+# subi Rd,Rs,immed ; Rd <- Rs - immed	PC <- PC + 2
 17: addrsel=pc imload=1
 	aluop=sub  op2sel=immed dwrite=1  regsrc=aluout, goto pcincr
 
@@ -24,15 +24,15 @@ fetch:	addrsel=pc irload=1 			# Address=PC, Load IR register
 40:	addrsel=pc  imload=1								            # Read Immediate operand -> IMRegister
 	aluop=sub  op2sel=const0, if z then pcincr else jump		    # If z then pcincr else jump to immed; opsel=0 means value of 2 (constant 0 is selected!!!)
 
-# jmp immed  ; PC <- immed TO JE NA NOVO
+# jmp immed  ; PC <- immedO
 45:	addrsel=pc	imload=1
 	pcload=1  pcsel=immed, goto fetch
 
-# beq Rs,Rt,immed (46)  ; if Rs == Rt, PC <- PC + immed else  PC <- PC + 2 TO JE NA NOVO
+# beq Rs,Rt,immed (46)  ; if Rs == Rt, PC <- PC + immed else  PC <- PC + 2
 46:	addrsel=pc	imload=1
 	aluop=sub op2sel=treg, if z then b_jump else pcincr
 
-# bne bne Rs,Rt,immed (47)  ; if Rs != Rt, PC <- PC + immed else  PC <- PC + 2 TO JE NA NOVO	
+# bne bne Rs,Rt,immed (47)  ; if Rs != Rt, PC <- PC + immed else  PC <- PC + 2	
 47: addrsel=pc  imload=1
 	aluop=sub op2sel=treg, if z then pcincr else b_jump
 
@@ -47,7 +47,7 @@ fetch:	addrsel=pc irload=1 			# Address=PC, Load IR register
 	addrsel=immed  datawrite=1  datasel=dreg, goto pcincr			# additional increment (cause immed was read) and then new command
 #	pcload=1  pcsel=pc, goto fetch                                  # not optimal way to do this, better goto to pcincr: instead (line above)
 
-# move Rd,Rs (70)  ; Rd <- Rs TO JE NA NOVO
+# move Rd,Rs (70)  ; Rd <- Rs
 70: dwrite=1 regsrc=sreg, goto fetch
 
 #
@@ -59,5 +59,5 @@ pcincr:	pcload=1  pcsel=pc, goto fetch
 # Set address to immed and goto new command; for jumps to absolute immed address
 jump:	pcload=1  pcsel=immed, goto fetch
 
-# Za pogojne skoke TO JE NA NOVO
+# For branch
 b_jump: pcload=1 pcsel=pcimmed, goto fetch
