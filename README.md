@@ -10,6 +10,6 @@
 </ul>
 <p>
  and programs to test them.
- It also implements a cicruit for I/O devices FB 16x16 and TTY and a addicional circuit to show the binary value of a register using an array of LED.
+ It also implements a cicruit for I/O devices FB 16x16 and TTY and a additional circuit to show the binary value of a register using an array of LED.
  This repo was created as part of an assignment for module OR at FRI.
 </p>
